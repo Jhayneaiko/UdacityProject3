@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"src/*/.ts\"",
     "start": "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
@@ -96,7 +96,7 @@
       "ts"
     ],
     "testMatch": [
-      "**/*.spec.ts"
+      "*/.spec.ts"
     ],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -104,11 +104,11 @@
     "coverageDirectory": "<rootDir>/coverage",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.ts",
-      "!src/migrations/**/*.ts",
-      "!src/modules/config/**/*.ts",
-      "!src/modules/app/**/*.ts",
-      "!src/modules/auth/**/*.ts",
+      "src/*/.ts",
+      "!src/migrations/*/.ts",
+      "!src/modules/config/*/.ts",
+      "!src/modules/app/*/.ts",
+      "!src/modules/auth/*/.ts",
       "!src/*.ts"
     ],
     "testEnvironment": "node",
