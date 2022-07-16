@@ -8,7 +8,7 @@
     become: true
     apt:
         upgrade: dist
-- name: remove unwanted dependancies
+  - name: remove unwanted dependancies
     become: true
     apt: 
         autoremove: yes
@@ -17,7 +17,7 @@
     become: true
     apt:
         name: python3
-- name: nodejs install
+  - name: nodejs install
     become: true
     apt:
         name: ["nodejs", "npm"]
@@ -30,14 +30,13 @@
         name: pm2
         global: yes
         production: yes
-- name: pm2 startup script
+  - name: pm2 startup script
     shell: |
         pm2 startup
         sudo env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
     ignore_errors: true
-- name: confirm pm2 service is running
+  - name: confirm pm2 service is running
     shell: |
         systemctl status pm2-ubuntu.service
     ignore_errors: true
 
-jez-tdfx-fyd
