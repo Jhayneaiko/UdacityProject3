@@ -242,7 +242,7 @@ jobs:
             fi
       - destroy-environment
       - revert-migrations    
-     
+     #not important
  
   deploy-frontend:
     docker:
