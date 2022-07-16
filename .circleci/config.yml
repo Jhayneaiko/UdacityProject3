@@ -208,7 +208,7 @@ jobs:
              pwd               
              cd .circleci/ansible
              ansible-playbook -i inventory.txt configure-server.yml
-      - destroy-envionment
+      - destroy-environment
 
   run-migrations:
     docker:
@@ -243,7 +243,6 @@ jobs:
       - destroy-environment
       - revert-migrations    
      
- 
  
   deploy-frontend:
     docker:
