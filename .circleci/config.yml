@@ -405,7 +405,7 @@ jobs:
             fi
        
 workflows:
-  default:
+  udapeople:
     jobs:
       - hello-world    
       - build-frontend
