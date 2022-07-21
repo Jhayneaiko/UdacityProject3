@@ -1,1 +1,3 @@
 URL01 = https://github.com/Jhayneaiko/UdacityProject3 
+URL02 = http://udapeople-23d7d27.s3-website-us-east-1.amazonaws.com
+Cloudfront URL = http://dvo37q9vxgyqw.cloudfront.net/
