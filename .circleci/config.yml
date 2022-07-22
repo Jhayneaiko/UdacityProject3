@@ -156,6 +156,13 @@ jobs:
              yum install tar gzip -y
              yum update -y
       - run:
+            name: Get old workflow id
+            command: |
+              export OldWorkflowID=$(aws cloudformation \
+              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+              echo "${OldWorkflowID}" > OldWorkflowID.txt     
+      - run:
           name: Ensure back-end infrastructure exists
           command: |
             aws cloudformation deploy \
@@ -184,6 +191,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+            - project/OldWorkflowID.txt
       - destroy-environment
 
   configure-infrastructure:
@@ -366,10 +374,6 @@ jobs:
       - run:
           name: Update cloudfront distribution
           command: |
-            export OldWorkflowID=$(aws cloudformation \
-            list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-            --no-paginate --output text)
-            curl --insecure https://kvdb.io/J6UzZ9r1W8xxWqwHccqSJx/OldWorkflowID -d '\"$OldWorkflowID\"'
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack \
@@ -399,14 +403,15 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
-            export getOldWorkflowID = curl --insecure  https://J6UzZ9r1W8xxWqwHccqSJx/OldWorkflowID
+            export getOldWorkflowID=($(cat OldWorkflowID.txt))
             if [[ "${STACKS[@]}" =~ "${getOldWorkflowID}" ]]
             then
                 aws s3 rm "s3://udapeople-${getOldWorkflowID}" --recursive
                 aws cloudformation delete-stack --stack-name "udapeople-backend-${getOldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "udapeople-frontend-${getOldWorkflowID}"
             fi
-    
+
+       
 workflows:
   udapeople:
     jobs:
